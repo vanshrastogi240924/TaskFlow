@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import authRoutes from "./routes/authRoutes.js";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 
@@ -13,7 +14,7 @@ connectDB();
 // Middleware
 app.use(cors());
 app.use(express.json());
-
+app.use("/api/auth", authRoutes);
 // Test Route
 app.get("/", (req, res) => {
   res.send("🚀 TaskFlow Backend Running...");
