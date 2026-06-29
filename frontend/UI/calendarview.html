@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TaskFlow - Calendar View</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .calendar-grid-cell {
+            aspect-ratio: 1 / 1.1;
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-variant": "#e0e3e3",
+                    "tertiary": "#895029",
+                    "primary-fixed-dim": "#88d2e0",
+                    "on-error-container": "#93000a",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed-dim": "#afccd1",
+                    "on-primary-container": "#000608",
+                    "on-background": "#181c1d",
+                    "surface-container-highest": "#e0e3e3",
+                    "secondary": "#486368",
+                    "primary-fixed": "#a4eefd",
+                    "inverse-surface": "#2d3131",
+                    "on-tertiary-container": "#0d0300",
+                    "surface-tint": "#0c6875",
+                    "surface-container-low": "#f1f4f4",
+                    "on-secondary-container": "#4c676c",
+                    "outline-variant": "#bec8ca",
+                    "on-primary-fixed": "#001f24",
+                    "tertiary-fixed-dim": "#ffb689",
+                    "outline": "#6f797b",
+                    "inverse-primary": "#88d2e0",
+                    "tertiary-fixed": "#ffdbc8",
+                    "on-primary-fixed-variant": "#004e59",
+                    "error-container": "#ffdad6",
+                    "on-primary": "#ffffff",
+                    "surface-container": "#ebeeee",
+                    "on-tertiary-fixed-variant": "#6d3914",
+                    "surface": "#f7fafa",
+                    "on-tertiary-fixed": "#321300",
+                    "surface-bright": "#f7fafa",
+                    "secondary-container": "#c8e5ea",
+                    "surface-container-high": "#e5e9e8",
+                    "primary-container": "#33818e",
+                    "on-secondary-fixed-variant": "#314b50",
+                    "on-secondary-fixed": "#021f23",
+                    "inverse-on-surface": "#eef1f1",
+                    "background": "#f7fafa",
+                    "error": "#ba1a1a",
+                    "tertiary-container": "#a6683f",
+                    "on-surface-variant": "#3f484a",
+                    "on-surface": "#181c1d",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "surface-dim": "#d7dbda",
+                    "primary": "#0c6874",
+                    "secondary-fixed": "#cbe8ed"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "md": "16px",
+                    "lg": "24px",
+                    "3xl": "64px",
+                    "gutter": "24px",
+                    "xs": "4px",
+                    "margin-mobile": "16px",
+                    "container-max": "1280px",
+                    "xl": "32px",
+                    "sm": "8px",
+                    "base": "4px",
+                    "2xl": "48px"
+            },
+            "fontFamily": {
+                    "body-sm": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-md": ["Inter"]
+            },
+            "fontSize": {
+                    "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "1", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "1", "letterSpacing": "0.01em", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md min-h-screen pb-32 overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="w-full sticky top-0 z-50 bg-surface border-b border-outline-variant shadow-sm flex justify-between items-center px-4 md:px-lg h-16">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary" data-icon="checklist">checklist</span>
+<span class="text-headline-md font-headline-md text-primary tracking-tight">TaskFlow</span>
+</div>
+<div class="flex items-center gap-md">
+<div class="hidden md:flex gap-lg items-center px-lg border-x border-outline-variant mx-lg">
+<a class="text-label-md font-label-md text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 px-md py-sm rounded-lg" href="#">Dashboard</a>
+<a class="text-label-md font-label-md text-primary bg-primary-container/10 px-md py-sm rounded-lg" href="#">Calendar</a>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a software engineer in their early 30s, looking directly at the camera with a friendly expression. The lighting is soft and corporate, set against a blurred office background with cool blue and teal tones. The image is crisp, high-fidelity, and adheres to a minimalist corporate aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4GWEvX2ah_jo0gm0powyexYpG-26Yf7gz4nzfelR17O7mtIAIoXZfDllnMp3nztHXILk4AQFdn5EhbMNAuedfHw_BHrYJJsWlCM0lNA_2XUewwTacgBYiP_2fEhei5dhj_3CJsDV23yWgAGpjU_tVAORuwUG_EALV7NChH61Ad2aacq7ozvs3jB932OAZZQheIaYf_Ouy5GGsvsakpK8bB1cRCJNBauXtrCHi_xxgqj3qWmiBIk1bm60mdsB-Fr3-_tzd1rcLE-Q"/>
+</div>
+</div>
+</header>
+<main class="max-w-container-max mx-auto px-4 md:px-lg py-lg">
+<div class="flex flex-col lg:grid lg:grid-cols-12 gap-gutter">
+<!-- Left Column: Calendar Grid -->
+<div class="lg:col-span-8 flex flex-col gap-lg">
+<!-- Calendar Header -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-md bg-surface-container-lowest p-lg rounded-xl shadow-sm border border-outline-variant">
+<div>
+<h1 class="text-headline-lg font-headline-lg text-on-surface">October 2024</h1>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Today is Wednesday, 23rd</p>
+</div>
+<div class="flex bg-surface-container rounded-lg p-1">
+<button class="px-lg py-sm bg-surface-container-lowest text-primary shadow-sm rounded-md text-label-md font-label-md transition-all">Month</button>
+<button class="px-lg py-sm text-on-surface-variant hover:text-primary rounded-md text-label-md font-label-md transition-all">Week</button>
+</div>
+</div>
+<!-- Bento-styled Calendar Grid -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant overflow-hidden">
+<div class="grid grid-cols-7 border-b border-outline-variant bg-surface-container-low">
+<div class="py-md text-center text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Sun</div>
+<div class="py-md text-center text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Mon</div>
+<div class="py-md text-center text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Tue</div>
+<div class="py-md text-center text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Wed</div>
+<div class="py-md text-center text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Thu</div>
+<div class="py-md text-center text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Fri</div>
+<div class="py-md text-center text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Sat</div>
+</div>
+<div class="grid grid-cols-7">
+<!-- Empty cells for start of month (assuming Oct 2024 starts on Tuesday) -->
+<div class="calendar-grid-cell border-r border-b border-outline-variant opacity-30 p-sm text-body-sm text-on-surface-variant">29</div>
+<div class="calendar-grid-cell border-r border-b border-outline-variant opacity-30 p-sm text-body-sm text-on-surface-variant">30</div>
+<!-- Calendar Days -->
+<div class="calendar-grid-cell border-r border-b border-outline-variant p-sm hover:bg-surface-container-low transition-colors group cursor-pointer">
+<span class="text-body-sm font-body-sm">1</span>
+<div class="mt-base flex gap-xs">
+<div class="w-1.5 h-1.5 rounded-full bg-primary"></div>
+</div>
+</div>
+<!-- Repeated cells for visualization (truncating for brevity in code but maintaining grid structure) -->
+<div class="calendar-grid-cell border-r border-b border-outline-variant p-sm hover:bg-surface-container-low transition-colors cursor-pointer"><span class="text-body-sm">2</span></div>
+<div class="calendar-grid-cell border-r border-b border-outline-variant p-sm hover:bg-surface-container-low transition-colors cursor-pointer"><span class="text-body-sm">3</span></div>
+<div class="calendar-grid-cell border-r border-b border-outline-variant p-sm hover:bg-surface-container-low transition-colors cursor-pointer"><span class="text-body-sm">4</span></div>
+<div class="calendar-grid-cell border-b border-outline-variant p-sm hover:bg-surface-container-low transition-colors cursor-pointer"><span class="text-body-sm">5</span></div>
+<!-- ... Days 6 to 22 ... -->
+<div class="calendar-grid-cell border-r border-b border-outline-variant p-sm opacity-50"><span class="text-body-sm">...</span></div>
+<div class="calendar-grid-cell border-r border-b border-outline-variant p-sm opacity-50"><span class="text-body-sm">...</span></div>
+<div class="calendar-grid-cell border-r border-b border-outline-variant p-sm opacity-50"><span class="text-body-sm">...</span></div>
+<div class="calendar-grid-cell border-r border-b border-outline-variant p-sm opacity-50"><span class="text-body-sm">...</span></div>
+<div class="calendar-grid-cell border-r border-b border-outline-variant p-sm opacity-50"><span class="text-body-sm">22</span></div>
+<!-- ACTIVE DAY: 23rd -->
+<div class="calendar-grid-cell border-r border-b border-outline-variant p-sm bg-primary-container text-on-primary-container shadow-inner">
+<span class="text-body-sm font-bold">23</span>
+<div class="mt-base flex flex-wrap gap-xs">
+<div class="w-1.5 h-1.5 rounded-full bg-on-primary-container"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-on-primary-container/60"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-on-primary-container/60"></div>
+</div>
+</div>
+<div class="calendar-grid-cell border-r border-b border-outline-variant p-sm hover:bg-surface-container-low cursor-pointer"><span class="text-body-sm">24</span></div>
+<div class="calendar-grid-cell border-r border-b border-outline-variant p-sm hover:bg-surface-container-low cursor-pointer"><span class="text-body-sm">25</span></div>
+<div class="calendar-grid-cell border-r border-b border-outline-variant p-sm hover:bg-surface-container-low cursor-pointer"><span class="text-body-sm">26</span></div>
+<div class="calendar-grid-cell border-b border-outline-variant p-sm hover:bg-surface-container-low cursor-pointer"><span class="text-body-sm">27</span></div>
+<div class="calendar-grid-cell border-r border-outline-variant p-sm hover:bg-surface-container-low cursor-pointer"><span class="text-body-sm">28</span></div>
+<div class="calendar-grid-cell border-r border-outline-variant p-sm hover:bg-surface-container-low cursor-pointer"><span class="text-body-sm">29</span></div>
+<div class="calendar-grid-cell border-r border-outline-variant p-sm hover:bg-surface-container-low cursor-pointer"><span class="text-body-sm">30</span></div>
+<div class="calendar-grid-cell border-r border-outline-variant p-sm hover:bg-surface-container-low cursor-pointer"><span class="text-body-sm">31</span></div>
+<div class="calendar-grid-cell border-r border-outline-variant opacity-30 p-sm text-body-sm">1</div>
+<div class="calendar-grid-cell border-r border-outline-variant opacity-30 p-sm text-body-sm">2</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Details & Insights -->
+<div class="lg:col-span-4 flex flex-col gap-lg">
+<!-- Tasks List -->
+<section class="flex flex-col gap-md">
+<div class="flex justify-between items-center">
+<h2 class="text-headline-md font-headline-md text-on-surface">Tasks</h2>
+<span class="text-label-md font-label-md text-primary">3 Remaining</span>
+</div>
+<div class="flex flex-col gap-sm">
+<!-- Task Card 1 -->
+<div class="p-lg bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm hover:shadow-lg hover:scale-[1.01] transition-all cursor-pointer group">
+<div class="flex justify-between items-start mb-sm">
+<span class="px-sm py-xs bg-primary/10 text-primary text-label-sm font-label-sm rounded">High Priority</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">09:00 AM</span>
+</div>
+<h3 class="text-body-lg font-bold text-on-surface group-hover:text-primary transition-colors">System Architecture Review</h3>
+<p class="text-body-sm text-on-surface-variant mt-xs">Technical validation for the new microservices infrastructure.</p>
+<div class="mt-md flex items-center gap-sm">
+<div class="h-1 flex-1 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[75%] rounded-full"></div>
+</div>
+<span class="text-label-sm font-label-sm text-on-surface-variant">75%</span>
+</div>
+</div>
+<!-- Task Card 2 -->
+<div class="p-lg bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm hover:shadow-lg transition-all cursor-pointer">
+<div class="flex justify-between items-start mb-sm">
+<span class="px-sm py-xs bg-secondary-container text-on-secondary-container text-label-sm font-label-sm rounded">Meeting</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">11:30 AM</span>
+</div>
+<h3 class="text-body-lg font-bold text-on-surface">Team Sync-up</h3>
+<p class="text-body-sm text-on-surface-variant mt-xs">Weekly alignment on project milestones and blockers.</p>
+<div class="mt-md flex -space-x-2">
+<div class="w-8 h-8 rounded-full border-2 border-surface bg-surface-dim"></div>
+<div class="w-8 h-8 rounded-full border-2 border-surface bg-surface-container-high"></div>
+<div class="w-8 h-8 rounded-full border-2 border-surface bg-primary-container flex items-center justify-center text-[10px] text-white">+3</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Productivity Insight Card (Bento/Glassmorphism feel) -->
+<div class="relative overflow-hidden rounded-xl bg-primary-container p-lg text-on-primary-container shadow-lg">
+<div class="absolute -right-8 -top-8 w-32 h-32 bg-on-primary-container/10 rounded-full blur-2xl"></div>
+<div class="relative z-10">
+<div class="flex items-center gap-sm mb-md">
+<span class="material-symbols-outlined text-on-primary-container" data-icon="lightbulb">lightbulb</span>
+<span class="text-label-md font-label-md uppercase tracking-wider opacity-80">Insight</span>
+</div>
+<h4 class="text-headline-md font-bold mb-sm leading-tight">Productivity Peak</h4>
+<p class="text-body-md opacity-90">You are 15% more efficient on Wednesdays. Most tasks are completed before 2:00 PM today. Keep it up!</p>
+<button class="mt-lg px-md py-sm bg-on-primary-container text-on-primary-container bg-opacity-20 hover:bg-opacity-30 rounded-lg text-label-md font-label-md transition-colors w-full border border-on-primary-container/20">View Detailed Analytics</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Action Button -->
+<button class="fixed bottom-24 right-4 md:right-8 w-14 h-14 bg-primary text-on-primary rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-40">
+<span class="material-symbols-outlined text-2xl" data-icon="add">add</span>
+</button>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 px-margin-mobile pb-safe bg-surface-container shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] md:hidden">
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined text-2xl" data-icon="dashboard">dashboard</span>
+<span class="text-label-sm font-label-sm mt-1">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined text-2xl" data-icon="add_circle">add_circle</span>
+<span class="text-label-sm font-label-sm mt-1">Add Task</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-6 py-2 scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined text-2xl" data-icon="calendar_month">calendar_month</span>
+<span class="text-label-sm font-label-sm mt-1">Calendar</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for calendar cells
+        document.querySelectorAll('.calendar-grid-cell').forEach(cell => {
+            cell.addEventListener('click', () => {
+                // Clear previous active states if they weren't the hardcoded 'today'
+                document.querySelectorAll('.calendar-grid-cell').forEach(c => {
+                    if (!c.classList.contains('bg-primary-container')) {
+                        c.classList.remove('bg-surface-container-low');
+                    }
+                });
+                
+                // Visual feedback
+                if (!cell.classList.contains('bg-primary-container')) {
+                    cell.classList.add('bg-surface-container-low');
+                }
+            });
+        });
+    </script>
+</body></html>

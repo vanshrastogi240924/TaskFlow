@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TaskFlow - Create New Task</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-variant": "#e0e3e3",
+                    "tertiary": "#895029",
+                    "primary-fixed-dim": "#88d2e0",
+                    "on-error-container": "#93000a",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed-dim": "#afccd1",
+                    "on-primary-container": "#000608",
+                    "on-background": "#181c1d",
+                    "surface-container-highest": "#e0e3e3",
+                    "secondary": "#486368",
+                    "primary-fixed": "#a4eefd",
+                    "inverse-surface": "#2d3131",
+                    "on-tertiary-container": "#0d0300",
+                    "surface-tint": "#0c6875",
+                    "surface-container-low": "#f1f4f4",
+                    "on-secondary-container": "#4c676c",
+                    "outline-variant": "#bec8ca",
+                    "on-primary-fixed": "#001f24",
+                    "tertiary-fixed-dim": "#ffb689",
+                    "outline": "#6f797b",
+                    "inverse-primary": "#88d2e0",
+                    "tertiary-fixed": "#ffdbc8",
+                    "on-primary-fixed-variant": "#004e59",
+                    "error-container": "#ffdad6",
+                    "on-primary": "#ffffff",
+                    "surface-container": "#ebeeee",
+                    "on-tertiary-fixed-variant": "#6d3914",
+                    "surface": "#f7fafa",
+                    "on-tertiary-fixed": "#321300",
+                    "surface-bright": "#f7fafa",
+                    "secondary-container": "#c8e5ea",
+                    "surface-container-high": "#e5e9e8",
+                    "primary-container": "#33818e",
+                    "on-secondary-fixed-variant": "#314b50",
+                    "on-secondary-fixed": "#021f23",
+                    "inverse-on-surface": "#eef1f1",
+                    "background": "#f7fafa",
+                    "error": "#ba1a1a",
+                    "tertiary-container": "#a6683f",
+                    "on-surface-variant": "#3f484a",
+                    "on-surface": "#181c1d",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "surface-dim": "#d7dbda",
+                    "primary": "#0c6874",
+                    "secondary-fixed": "#cbe8ed"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "md": "16px",
+                    "lg": "24px",
+                    "3xl": "64px",
+                    "gutter": "24px",
+                    "xs": "4px",
+                    "margin-mobile": "16px",
+                    "container-max": "1280px",
+                    "xl": "32px",
+                    "sm": "8px",
+                    "base": "4px",
+                    "2xl": "48px"
+            },
+            "fontFamily": {
+                    "body-sm": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-md": ["Inter"]
+            },
+            "fontSize": {
+                    "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "1", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "1", "letterSpacing": "0.01em", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-24 md:pb-0">
+<!-- TopAppBar -->
+<header class="w-full sticky top-0 z-50 bg-surface border-b border-outline-variant shadow-sm flex justify-between items-center px-4 md:px-lg h-16">
+<div class="flex items-center gap-3">
+<div class="text-primary transition-opacity Active:opacity-80">
+<span class="material-symbols-outlined text-headline-md" data-icon="checklist">checklist</span>
+</div>
+<h1 class="text-headline-md font-headline-md text-primary tracking-tight">TaskFlow</h1>
+</div>
+<nav class="hidden md:flex items-center gap-xl">
+<a class="text-label-md font-label-md text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 px-3 py-2 rounded-lg" href="dashboard.html">Dashboard</a>
+<a class="text-label-md font-label-md text-primary hover:bg-surface-container-high transition-colors duration-200 px-3 py-2 rounded-lg" href="add-task.html">Add Task</a>
+<a class="text-label-md font-label-md text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 px-3 py-2 rounded-lg" href="calendarview.html">Calendar</a>
+</nav>
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a corporate project manager in a bright, modern office setting. High-key lighting highlights the clean, minimalist aesthetic with a soft-focus background of glass partitions and white desks. The subject is wearing a crisp white shirt, reflecting an efficient and precise personality consistent with the TaskFlow brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmnJlSTAMMlHNi9jEGeZrNcqXBMTOpX-VS3UJvYDmO1y8Mzikvd8GlUdTqX6EqVUvnrbVuOaZEiSZTcv--4VBGOX_ELS3g2e5zG_Tam3b-S3KE_3TaanvrNo6ug8yCy5hzD_q1A04Ue10Kp5IhVBrvhtNoj5qG7hESR2FLh6lOxaXlP2PHDaOt8g-gscJRQ2kOR7dG4apOgxxq81xpL-Zc6Ou7qkmi9Jnf4IycTT48wAEyX28sDymjuzP5GXhFikrtcPuN07d4LN4"/>
+</div>
+</header>
+<main class="max-w-[800px] mx-auto px-4 md:px-0 py-xl">
+<!-- Headline Section -->
+<div class="mb-xl">
+<h2 class="text-headline-lg-mobile md:text-headline-lg font-headline-lg text-on-background">Create New Task</h2>
+<p class="text-body-md font-body-md text-on-surface-variant mt-xs">Define your next milestone and keep your workflow precise.</p>
+</div>
+<!-- Form Canvas -->
+<div class="bg-surface-container-low border border-outline-variant rounded-[1.5rem] p-lg shadow-sm">
+<form class="flex flex-col gap-lg"action="dashboard.html">
+<!-- Title and Category Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+<div class="flex flex-col gap-sm">
+<label class="text-label-md font-label-md text-on-surface-variant ml-1">Task Title</label>
+<input class="w-full px-md py-md rounded-xl bg-surface border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary-fixed outline-none transition-all text-body-md font-body-md" placeholder="e.g. Q4 Strategy Review" type="text"/>
+</div>
+<div class="flex flex-col gap-sm">
+<label class="text-label-md font-label-md text-on-surface-variant ml-1">Category</label>
+<div class="relative">
+<select class="w-full appearance-none px-md py-md rounded-xl bg-surface border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary-fixed outline-none transition-all text-body-md font-body-md cursor-pointer">
+<option>Development</option>
+<option>Marketing</option>
+<option>Operations</option>
+<option>Design</option>
+<option>Personal</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Description -->
+<div class="flex flex-col gap-sm">
+<label class="text-label-md font-label-md text-on-surface-variant ml-1">Description</label>
+<textarea class="w-full px-md py-md rounded-xl bg-surface border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary-fixed outline-none transition-all text-body-md font-body-md resize-none" placeholder="Break down the steps or context for this task..." rows="4"></textarea>
+</div>
+<!-- Deadline and Priority Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+<div class="flex flex-col gap-sm">
+<label class="text-label-md font-label-md text-on-surface-variant ml-1">Deadline</label>
+<div class="relative">
+<input class="w-full px-md py-md rounded-xl bg-surface border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary-fixed outline-none transition-all text-body-md font-body-md" type="datetime-local"/>
+</div>
+</div>
+<div class="flex flex-col gap-sm">
+<label class="text-label-md font-label-md text-on-surface-variant ml-1">Priority Level</label>
+<div class="flex flex-wrap gap-sm">
+<label class="cursor-pointer group">
+<input class="sr-only peer" name="priority" type="radio" value="low"/>
+<span class="px-md py-2 rounded-full border border-outline-variant text-label-md font-label-md text-on-surface-variant peer-checked:bg-secondary-container peer-checked:text-on-secondary-container peer-checked:border-secondary transition-all block group-hover:bg-surface-container-high">Low</span>
+</label>
+<label class="cursor-pointer group">
+<input checked="" class="sr-only peer" name="priority" type="radio" value="medium"/>
+<span class="px-md py-2 rounded-full border border-outline-variant text-label-md font-label-md text-on-surface-variant peer-checked:bg-primary-container peer-checked:text-on-primary-container peer-checked:border-primary transition-all block group-hover:bg-surface-container-high">Medium</span>
+</label>
+<label class="cursor-pointer group">
+<input class="sr-only peer" name="priority" type="radio" value="high"/>
+<span class="px-md py-2 rounded-full border border-outline-variant text-label-md font-label-md text-on-surface-variant peer-checked:bg-tertiary-container peer-checked:text-on-tertiary-container peer-checked:border-tertiary transition-all block group-hover:bg-surface-container-high">High</span>
+</label>
+<label class="cursor-pointer group">
+<input class="sr-only peer" name="priority" type="radio" value="urgent"/>
+<span class="px-md py-2 rounded-full border border-outline-variant text-label-md font-label-md text-on-surface-variant peer-checked:bg-error-container peer-checked:text-on-error-container peer-checked:border-error transition-all block group-hover:bg-surface-container-high">Urgent</span>
+</label>
+</div>
+</div>
+</div>
+<!-- Divider -->
+<div class="h-px bg-outline-variant my-md opacity-50"></div>
+<!-- Action Buttons -->
+<div class="flex flex-col-reverse md:flex-row justify-end items-center gap-md">
+<button class="w-full md:w-auto px-xl py-3 rounded-xl border border-outline-variant text-label-md font-label-md text-on-surface-variant hover:bg-surface-container-high transition-all active:scale-95" type="button">Cancel</button>
+<button class="w-full md:w-auto px-3xl py-3 rounded-xl bg-primary-container text-on-primary text-label-md font-label-md shadow-sm hover:opacity-90 transition-all active:scale-95 flex items-center justify-center gap-2" type="submit">
+<span class="material-symbols-outlined" data-icon="add_task">add_task</span>
+                        Create Task
+                    </button>
+</div>
+</form>
+</div>
+<!-- Atmospheric Visual Element -->
+<div class="mt-3xl hidden md:block opacity-40 grayscale hover:grayscale-0 transition-all duration-700">
+<div class="w-full h-48 rounded-[1.5rem] overflow-hidden relative border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A wide-angle, minimalist office interior with white walls, high ceilings, and a single organized desk. Soft natural light flows through large windows, creating subtle shadows. The atmosphere is calm, corporate, and professional, perfectly capturing the essence of an efficient workflow environment. The color palette is dominated by whites, cool greys, and a touch of primary teal." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCt1IupV-iYHJ5Sgi5DtlxCDvgIBALvdvEkI7XVBk-rS-J6w8XtqWwuozI5u2gGvphUcLQfJtmmTjAS69NpUiwYeFrm2NggnHKkrIP-TLTNLli8Lh9O8KpOP_i9HaSU0zbQlts5CJgdgmG8MOIFDpZUVxw3R-yA8A4gJyuKsoVQ7lDvdzOpaq7nPq5mNshii0Wd4X_y9lYhsmDDp3m-R5cTcjZdXbJ83XsPlO5epk5X5h--ADOTgPXtp2pNx6jvcB1aDDuwUtigSdk"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent"></div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 px-margin-mobile pb-safe bg-surface-container shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-primary transition-all" href="dashboard.html">
+<span class="material-symbols-outlined text-2xl" data-icon="dashboard">dashboard</span>
+<span class="text-label-sm font-label-sm">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 scale-95 transition-transform duration-150" href="add-task.html">
+<span class="material-symbols-outlined text-2xl" data-icon="add_circle">add_circle</span>
+<span class="text-label-sm font-label-sm">Add Task</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-primary transition-all" href="calendarview.html">
+<span class="material-symbols-outlined text-2xl" data-icon="calendar_month">calendar_month</span>
+<span class="text-label-sm font-label-sm">Calendar</span>
+</a>
+</nav>
+<script>
+        // Micro-interactions for form inputs
+        const inputs = document.querySelectorAll('input, textarea, select');
+        inputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.querySelector('label')?.classList.add('text-primary');
+            });
+            input.addEventListener('blur', () => {
+                input.parentElement.querySelector('label')?.classList.remove('text-primary');
+            });
+        });
+
+        // Form submission prevention for demo
+      
+    
+    </script>
+</body></html>

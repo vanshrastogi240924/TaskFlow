@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TaskFlow Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-variant": "#e0e3e3",
+            "tertiary": "#895029",
+            "primary-fixed-dim": "#88d2e0",
+            "on-error-container": "#93000a",
+            "surface-container-lowest": "#ffffff",
+            "secondary-fixed-dim": "#afccd1",
+            "on-primary-container": "#000608",
+            "on-background": "#181c1d",
+            "surface-container-highest": "#e0e3e3",
+            "secondary": "#486368",
+            "primary-fixed": "#a4eefd",
+            "inverse-surface": "#2d3131",
+            "on-tertiary-container": "#0d0300",
+            "surface-tint": "#0c6875",
+            "surface-container-low": "#f1f4f4",
+            "on-secondary-container": "#4c676c",
+            "outline-variant": "#bec8ca",
+            "on-primary-fixed": "#001f24",
+            "tertiary-fixed-dim": "#ffb689",
+            "outline": "#6f797b",
+            "inverse-primary": "#88d2e0",
+            "tertiary-fixed": "#ffdbc8",
+            "on-primary-fixed-variant": "#004e59",
+            "error-container": "#ffdad6",
+            "on-primary": "#ffffff",
+            "surface-container": "#ebeeee",
+            "on-tertiary-fixed-variant": "#6d3914",
+            "surface": "#f7fafa",
+            "on-tertiary-fixed": "#321300",
+            "surface-bright": "#f7fafa",
+            "secondary-container": "#c8e5ea",
+            "surface-container-high": "#e5e9e8",
+            "primary-container": "#33818e",
+            "on-secondary-fixed-variant": "#314b50",
+            "on-secondary-fixed": "#021f23",
+            "inverse-on-surface": "#eef1f1",
+            "background": "#f7fafa",
+            "error": "#ba1a1a",
+            "tertiary-container": "#a6683f",
+            "on-surface-variant": "#3f484a",
+            "on-surface": "#181c1d",
+            "on-secondary": "#ffffff",
+            "on-tertiary": "#ffffff",
+            "on-error": "#ffffff",
+            "surface-dim": "#d7dbda",
+            "primary": "#0c6874",
+            "secondary-fixed": "#cbe8ed"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "md": "16px",
+            "lg": "24px",
+            "3xl": "64px",
+            "gutter": "24px",
+            "xs": "4px",
+            "margin-mobile": "16px",
+            "container-max": "1280px",
+            "xl": "32px",
+            "sm": "8px",
+            "base": "4px",
+            "2xl": "48px"
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="w-full sticky top-0 z-50 bg-surface dark:bg-surface-dim border-b border-outline-variant dark:border-outline shadow-sm flex justify-between items-center px-4 md:px-lg h-16">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim" data-icon="checklist">checklist</span>
+<h1 class="text-headline-md font-headline-md text-primary dark:text-primary-fixed-dim tracking-tight">TaskFlow</h1>
+</div>
+<div class="flex items-center gap-md">
+<button class="p-2 rounded-full hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors duration-200">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="search">search</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional studio headshot of a smiling male office worker with short dark hair, wearing a clean white shirt against a neutral grey background. The lighting is soft and even, highlighting a corporate but friendly persona, perfect for a modern task management application user profile." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAILVguEqdciNaCe7NxKbNHUShD04aYXyLqmHAj7QdSf2hZ8N-7hgzzb94KmguS8vDIubJilJbd6KxQv6aCUuu0rLK828FcmkyL89ltB9CSWUL8WdvLyAyZXTnssSyovzKs4ioCBn7q5IHnKRVEKvsmu2VV0TxxEZaZdiRtPaySw80_voFZbA-8W5jHEOA-J4HPn7WTexHwyW0E2xvXd0QQpFa1BSf6-sSCM9TLNdtJ--FJtdyd2axidVpOkc4OLZBUSHxuj3fAK9s"/>
+</div>
+</div>
+</header>
+<main class="max-w-container-max mx-auto px-margin-mobile md:px-lg py-lg space-y-xl">
+<!-- Hero / Greeting -->
+<section class="flex flex-col md:flex-row md:items-end justify-between gap-md">
+<div>
+<p class="text-label-md font-label-md text-on-surface-variant mb-base">Welcome back,</p>
+<h2 class="text-headline-lg font-headline-lg">Good Morning, Alex</h2>
+</div>
+<!-- Search Bar -->
+<div class="relative w-full md:w-80 group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant" data-icon="search">search</span>
+<input class="w-full pl-12 pr-4 py-3 bg-surface-container-low border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary-container focus:border-primary outline-none transition-all" placeholder="Search tasks..." type="text"/>
+</div>
+</section>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Column: Stats & Focus -->
+<div class="lg:col-span-4 space-y-gutter">
+<!-- Quick Stats -->
+<div class="space-y-sm">
+<h3 class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">Quick Stats</h3>
+<div class="grid grid-cols-2 gap-sm">
+<div class="p-lg bg-surface-container-highest rounded-xl border border-outline-variant shadow-sm">
+<span class="text-display-lg font-display-lg text-primary">24</span>
+<p class="text-label-sm font-label-sm text-on-surface-variant mt-xs">Total Tasks</p>
+</div>
+<div class="p-lg bg-primary-container rounded-xl shadow-sm text-on-primary">
+<span class="text-display-lg font-display-lg">18</span>
+<p class="text-label-sm font-label-sm text-on-primary-container/80 mt-xs">Completed</p>
+</div>
+</div>
+</div>
+<!-- Boost Your Focus Card -->
+<div class="relative overflow-hidden p-lg rounded-[1.5rem] bg-inverse-surface text-inverse-on-surface shadow-lg min-h-[220px] flex flex-col justify-between">
+<div class="z-10">
+<h4 class="text-headline-md font-headline-md mb-sm">Boost Your Focus</h4>
+<p class="text-body-sm font-body-sm opacity-80 max-w-[200px]">Unlock peak productivity with our guided deep-work session.</p>
+</div>
+<button class="z-10 w-fit px-lg py-sm bg-primary-container text-on-primary-container font-label-md rounded-full hover:scale-105 transition-transform">
+            Start Focusing
+          </button>
+<!-- Decorative Background Element -->
+<div class="absolute -right-12 -bottom-12 w-48 h-48 bg-primary rounded-full blur-[60px] opacity-30"></div>
+<div class="absolute right-4 top-4 opacity-20">
+<span class="material-symbols-outlined text-[80px]" data-icon="timer">timer</span>
+</div>
+</div>
+</div>
+<!-- Right Column: Tasks & Feed -->
+<div class="lg:col-span-8 space-y-gutter">
+<!-- Upcoming Tasks -->
+<div class="p-lg bg-surface rounded-[1.5rem] border border-outline-variant shadow-sm space-y-md">
+<div class="flex items-center justify-between">
+<h3 class="text-headline-md font-headline-md">Upcoming Tasks</h3>
+<div class="flex gap-xs">
+<button class="px-md py-xs bg-secondary-container text-on-secondary-container rounded-full text-label-sm font-label-sm">All</button>
+<button class="px-md py-xs hover:bg-surface-container-high rounded-full text-label-sm font-label-sm transition-colors">High Priority</button>
+</div>
+</div>
+<div class="space-y-sm">
+<!-- Task Item 1 -->
+<div class="flex flex-col md:flex-row md:items-center gap-md p-md bg-surface-container-low rounded-xl border border-transparent hover:border-outline-variant hover:shadow-md transition-all group cursor-pointer">
+<div class="flex-shrink-0 w-12 h-12 flex items-center justify-center bg-tertiary-fixed rounded-full text-on-tertiary-fixed">
+<span class="material-symbols-outlined" data-icon="presentation_chart_line">task</span>
+</div>
+<div class="flex-grow space-y-xs">
+<div class="flex justify-between items-start">
+<h5 class="text-body-md font-bold text-on-surface">Q4 Strategy Deck Final Review</h5>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Tomorrow</span>
+</div>
+<div class="w-full bg-surface-variant h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full transition-all duration-700" style="width: 75%"></div>
+</div>
+<div class="flex justify-between text-label-sm font-label-sm text-on-surface-variant">
+<span>Progress</span>
+<span class="text-primary font-bold">75%</span>
+</div>
+</div>
+</div>
+<!-- Task Item 2 -->
+<div class="flex flex-col md:flex-row md:items-center gap-md p-md bg-surface-container-low rounded-xl border border-transparent hover:border-outline transition-all duration-300">
+
+    <div class="flex-shrink-0 w-12 h-12 flex items-center justify-center bg-secondary-fixed rounded-full text-on-secondary-fixed">
+        <span class="material-symbols-outlined">sync</span>
+    </div>
+
+    <div class="flex-grow space-y-xs">
+        <div class="flex justify-between items-start">
+            <h5 class="text-body-md font-bold text-on-surface">
+                Product Roadmap Sync
+            </h5>
+            <span class="text-label-sm font-label-sm text-on-surface-variant">
+                Fri, 12 Oct
+            </span>
+        </div>
+
+        <div class="w-full bg-surface-variant h-2 rounded-full overflow-hidden">
+            <div class="bg-tertiary-container h-full" style="width:30%"></div>
+        </div>
+
+        <div class="flex justify-between text-label-sm font-label-sm text-on-surface-variant">
+            <span>Progress</span>
+            <span class="text-tertiary-container font-bold">30%</span>
+        </div>
+    </div>
+
+</div>
+<!-- Activity Feed -->
+<div class="p-lg bg-surface rounded-[1.5rem] border border-outline-variant shadow-sm space-y-md">
+<h3 class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">Recent Activity</h3>
+<div class="space-y-md">
+<div class="flex gap-md">
+<div class="relative">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[20px]" data-icon="check_circle">check_circle</span>
+</div>
+<div class="absolute top-10 left-1/2 w-px h-8 bg-outline-variant"></div>
+</div>
+<div class="pb-md">
+<p class="text-body-md font-body-md text-on-surface">Completed <span class="font-bold">Client Briefing</span> task</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant">2 hours ago</p>
+</div>
+</div>
+<div class="flex gap-md">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]" data-icon="comment">comment</span>
+</div>
+<div>
+<p class="text-body-md font-body-md text-on-surface">Sarah left a comment on <span class="font-bold">UI System</span></p>
+<p class="text-label-sm font-label-sm text-on-surface-variant">5 hours ago</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 px-margin-mobile pb-safe bg-surface-container dark:bg-surface-container-lowest shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] rounded-t-xl">
+<button class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary text-on-primary-container dark:text-on-primary rounded-full px-4 py-1 scale-95 transition-transform duration-150">
+<span class="material-symbols-outlined text-2xl" data-icon="dashboard">dashboard</span>
+<span class="text-label-sm font-label-sm">Dashboard</span>
+</button>
+<a href="add-task.html" class="flex flex-col items-center justify-center text-on-surface-variant">
+    <span class="material-symbols-outlined">add_circle</span>
+    <span>Add Task</span>
+</a>
+
+<a href="calendarview.html" class="flex flex-col items-center justify-center text-on-surface-variant">
+    <span class="material-symbols-outlined">calendar_month</span>
+    <span>Calendar</span>
+</a>
+</nav>
+<!-- Floating Action Button (FAB) - Contextual for Dashboard -->
+<button class="fixed bottom-24 right-6 w-14 h-14 bg-primary text-on-primary rounded-2xl shadow-xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all md:bottom-8 md:right-8 group">
+<span class="material-symbols-outlined text-[32px]" data-icon="add">add</span>
+<span class="absolute right-full mr-4 bg-inverse-surface text-inverse-on-surface px-md py-xs rounded-lg text-label-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">New Task</span>
+</button>
+<script>
+    // Micro-interactions for activity items
+    document.querySelectorAll('.cursor-pointer').forEach(item => {
+      item.addEventListener('mouseenter', () => {
+        // Trigger any desired JS animation logic here
+      });
+    });
+
+    // Handle scroll shadow for TopAppBar
+    window.addEventListener('scroll', () => {
+      const header = document.querySelector('header');
+      if (window.scrollY > 10) {
+        header.classList.add('shadow-md');
+      } else {
+        header.classList.remove('shadow-md');
+      }
+    });
+  </script>
+</body></html>
